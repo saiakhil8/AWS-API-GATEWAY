@@ -24,7 +24,7 @@ resource "aws_apigatewayv2_authorizer" "api_gw_authorizer" {
   authorizer_uri   = "arn:aws:lambda:eu-west-1:493214895033:function:trial-apigateway-authorizer"
   enable_simple_responses = var.api_gw_authorizer_enable_simple_responses
   authorizer_payload_format_version = var.api_gw_authorizer_payload_format_version
-  //"2.0"
+  identity_sources = ["route.request.header.Auth"]
   authorizer_result_ttl_in_seconds = var.api_gw_authorizer_result_ttl_in_seconds
   name             = var.api_gw_authorizer_name
 }
