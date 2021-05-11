@@ -22,11 +22,19 @@ resource "aws_apigatewayv2_authorizer" "api_gw_authorizer" {
   api_id           = aws_apigatewayv2_api.api_gw_api.id
   authorizer_type  = var.api_gw_authorizer_type
   authorizer_uri   = "arn:aws:lambda:eu-west-1:493214895033:function:trial-apigateway-authorizer"
-  enable_simple_responses = var.api_gw_authorizer_enable_simple_responses
-  authorizer_payload_format_version = var.api_gw_authorizer_payload_format_version
+ // enable_simple_responses = var.api_gw_authorizer_enable_simple_responses
+ // authorizer_payload_format_version = var.api_gw_authorizer_payload_format_version
   identity_sources = ["route.request.header.Auth"]
-  authorizer_result_ttl_in_seconds = var.api_gw_authorizer_result_ttl_in_seconds
+  //authorizer_result_ttl_in_seconds = var.api_gw_authorizer_result_ttl_in_seconds
   name             = var.api_gw_authorizer_name
+  jwt_configuration {
+    audience = ["all"]
+    issuer   = "https://${aws_cognito_user_pool.pool.endpoint}"
+  }
+}
+
+resource "aws_cognito_user_pool" "pool" {
+  name = "hk-digi-user-pool"
 }
 
 resource "aws_apigatewayv2_integration" "api_gw_integration" {
