@@ -24,7 +24,7 @@ resource "aws_apigatewayv2_authorizer" "api_gw_authorizer" {
   authorizer_uri   = "arn:aws:lambda:eu-west-1:493214895033:function:trial-apigateway-authorizer"
  // enable_simple_responses = var.api_gw_authorizer_enable_simple_responses
  // authorizer_payload_format_version = var.api_gw_authorizer_payload_format_version
-  identity_sources = ["route.request.header.Auth"]
+  identity_sources = ["$request.header.Authorization"]
   //authorizer_result_ttl_in_seconds = var.api_gw_authorizer_result_ttl_in_seconds
   name             = var.api_gw_authorizer_name
   jwt_configuration {
@@ -49,8 +49,8 @@ resource "aws_apigatewayv2_integration" "api_gw_integration" {
   connection_id      = aws_apigatewayv2_vpc_link.api_gw_vpclink.id
 }
 
-resource "aws_apigatewayv2_route" "api_gw_route" {
-  api_id    = aws_apigatewayv2_api.api_gw_api.id
-  route_key = var.api_gw_route_key
-  target = "integrations/${aws_apigatewayv2_integration.api_gw_integration.id}"
-}
+# resource "aws_apigatewayv2_route" "api_gw_route" {
+#   api_id    = aws_apigatewayv2_api.api_gw_api.id
+#   route_key = var.api_gw_route_key
+#   target = "integrations/${aws_apigatewayv2_integration.api_gw_integration.id}"
+# }
