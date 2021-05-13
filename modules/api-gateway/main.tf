@@ -39,18 +39,40 @@ resource "aws_cognito_user_pool" "pool" {
 
 resource "aws_apigatewayv2_integration" "api_gw_integration" {
   api_id           = aws_apigatewayv2_api.api_gw_api.id
-  description      = var.api_gw_integration_description
-  integration_type = var.api_gw_integration_type
-  //"HTTP_PROXY"
-  integration_uri  = "arn:aws:elasticloadbalancing:eu-west-1:493214895033:listener/app/HK-onb-ALB/26e8657a2f7eafb2/a55e19aacb3074d5"
+  description      = "Example with a load balancer"
+  integration_type = "HTTP_PROXY"
+  integration_uri  = aws_lb_listener.example.arn
 
-  integration_method = var.api_gw_integration_method
-  connection_type    = var.api_gw_integration_connection_type
+  integration_method = "ANY"
+  connection_type    = "VPC_LINK"
   connection_id      = aws_apigatewayv2_vpc_link.api_gw_vpclink.id
+
+  tls_config {
+    server_name_to_verify = "example.com"
+  }
+
+  request_parameters = {
+    "append:header.authforintegration" = "$context.authorizer.authorizerResponse"
+    "overwrite:path"                   = "staticValueForIntegration"
+  }
+
+  response_parameters {
+    status_code = 403
+    mappings = {
+      "append:header.auth" = "$context.authorizer.authorizerResponse"
+    }
+  }
+
+  response_parameters {
+    status_code = 200
+    mappings = {
+      "overwrite:statuscode" = "204"
+    }
+  }
 }
 
-# resource "aws_apigatewayv2_route" "api_gw_route" {
-#   api_id    = aws_apigatewayv2_api.api_gw_api.id
-#   route_key = var.api_gw_route_key
-#   target = "integrations/${aws_apigatewayv2_integration.api_gw_integration.id}"
-# }
+resource "aws_apigatewayv2_route" "api_gw_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_api.id
+  route_key = var.api_gw_route_key
+  target = "integrations/${aws_apigatewayv2_integration.api_gw_integration.id}"
+}
