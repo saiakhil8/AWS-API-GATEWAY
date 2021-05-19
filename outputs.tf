@@ -13,3 +13,11 @@ output "api_gw_arn" {
   description = "Address of the cluster"
   value = module.api_gateway.api_gw_arn
 }
+
+output "api_gw_route_ids"{
+  value = module.api_gateway.api_gw_routes_ids
+}
+
+output "api_gw_integration_id"{
+  value = module.api_gateway.api_gw_integration_id
+}

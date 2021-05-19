@@ -41,30 +41,30 @@ variable "api_gw_stage_auto_deploy" {
 }
 
 
-variable "api_gw_authorizer_type" {
-  type = string
-  description = "Api gateway authorizer type"
-}
+# variable "api_gw_authorizer_type" {
+#   type = string
+#   description = "Api gateway authorizer type"
+# }
 
-variable "api_gw_authorizer_enable_simple_responses" {
-  type = bool
-  description = "Api gateway authorizer enable simple responses"
-}
+# variable "api_gw_authorizer_enable_simple_responses" {
+#   type = bool
+#   description = "Api gateway authorizer enable simple responses"
+# }
 
-variable "api_gw_authorizer_payload_format_version" {
-  type = string
-  description = "Api gateway authorizer payload format version (2.0)"
-}
+# variable "api_gw_authorizer_payload_format_version" {
+#   type = string
+#   description = "Api gateway authorizer payload format version (2.0)"
+# }
 
-variable "api_gw_authorizer_result_ttl_in_seconds" {
-  type = number
-  description = "Api gateway authorizer result ttl in seconds"
-}
+# variable "api_gw_authorizer_result_ttl_in_seconds" {
+#   type = number
+#   description = "Api gateway authorizer result ttl in seconds"
+# }
 
-variable "api_gw_authorizer_name" {
-  type = string
-  description = "Api gateway authorizer name"
-}
+# variable "api_gw_authorizer_name" {
+#   type = string
+#   description = "Api gateway authorizer name"
+# }
 
 variable "api_gw_integration_description" {
   type = string
@@ -86,8 +86,13 @@ variable "api_gw_integration_connection_type" {
   description = "Api gateway integration connection type"
 }
 
-variable "api_gw_route_key" {
-  type = string
+variable "api_gw_route_keys" {
+  type = list(string)
   //"ANY /"
-  description = "Api gateway route key"
+  description = "Api gateway route keys list"
+}
+
+variable "elb_integration_uri"{
+  type = string
+  description = "ELB Integration URI"
 }

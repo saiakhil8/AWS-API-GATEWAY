@@ -14,15 +14,11 @@ module "api_gateway" {
     api_gw_name                               = var.api_gw_name
     api_gw_protocol                           = var.api_gw_protocol
     api_gw_stage_name                         = var.api_gw_stage_name
-    api_gw_stage_auto_deploy                  = var.api_gw_stage_auto_deploy 
-    api_gw_authorizer_type                    = var.api_gw_authorizer_type
-    api_gw_authorizer_enable_simple_responses = var.api_gw_authorizer_enable_simple_responses
-    api_gw_authorizer_payload_format_version  = var.api_gw_authorizer_payload_format_version
-    api_gw_authorizer_result_ttl_in_seconds   = var.api_gw_authorizer_result_ttl_in_seconds
-    api_gw_authorizer_name                    = var.api_gw_authorizer_name
+    api_gw_stage_auto_deploy                  = var.api_gw_stage_auto_deploy
     api_gw_integration_description            = var.api_gw_integration_description
     api_gw_integration_type                   = var.api_gw_integration_type
     api_gw_integration_method                 = var.api_gw_integration_method
     api_gw_integration_connection_type        = var.api_gw_integration_connection_type
-    api_gw_route_key                          = var.api_gw_route_key
+    api_gw_route_keys                         = var.api_gw_route_keys
+    elb_integration_uri                       = var.elb_integration_uri
 }
